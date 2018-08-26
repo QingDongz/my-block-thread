@@ -88,11 +88,15 @@ public class KafkaPusher implements PythonTaskPusher{
     }
 
     public static void main(String[] args) {
-        Map<String,Object> map = new HashMap<>();
-        map.put("key001", "value001");
-        String json_msg = JSON.toJSONString(map, false);
-        KafkaPusher pusher = new KafkaPusher();
-        pusher.setTopic("192.168.100.245");
-        pusher.producer(json_msg);
+
+
+        for (int i = 1; i < 10; i++) {
+            Map<String,Object> map = new HashMap<>();
+            map.put("key00"+i, "value00"+i);
+            String json_msg = JSON.toJSONString(map, false);
+            KafkaPusher pusher = new KafkaPusher();
+            pusher.setTopic("192.168.100.245");
+            pusher.producer(json_msg);
+        }
     }
 }

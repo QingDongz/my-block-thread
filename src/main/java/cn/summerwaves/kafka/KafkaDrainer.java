@@ -24,6 +24,7 @@ public class KafkaDrainer {
         props.put("bootstrap.servers", "193.112.139.251:9092");
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+        props.put("max.poll.records", 1);
         props.setProperty("group.id", "0");
         props.setProperty("enable.auto.commit", "true");
         props.setProperty("auto.offset.reset", "earliest");
@@ -33,7 +34,7 @@ public class KafkaDrainer {
         return consumer;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         String topic = "192.168.100.245";
 
         KafkaDrainer kafkaDrainer = new KafkaDrainer();
@@ -42,12 +43,16 @@ public class KafkaDrainer {
 
 
         while (true) {
+            Thread.sleep(3000);
+            System.out.println("开始拉取数据===========================");
             ConsumerRecords<String, String> records = consumer.poll(1000);
-            System.out.println(records.count());
             for (ConsumerRecord<String, String> record : records) {
                 System.out.println(record.value());
 //    	        consumer.seekToBeginning(new TopicPartition(record.topic(), record.partition()));
             }
+            System.out.println("拉取数据结束===========================");
+            System.out.println();
+
         }
     }
 }
