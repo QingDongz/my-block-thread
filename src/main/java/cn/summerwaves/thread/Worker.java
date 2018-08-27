@@ -10,15 +10,20 @@ public class Worker implements Callable {
     private static final Logger log = getLogger(WorkThread.class);
 
     @Override
-    public Object call(){
+    public Object call() throws InterruptedException {
         Thread.currentThread().setName("工作者线程");
-        while (true) {
-            log.info("{} 运行中………………",Thread.currentThread().getName());
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                log.error(e.getMessage());
-            }
-        }
+        log.info("工作者线程执行1次");
+        Thread.sleep(3000);
+        log.info("工作者线程执行2次");
+        Thread.sleep(3000);
+        log.info("工作者线程执行3次");
+        Thread.sleep(3000);
+        log.info("工作者线程执行4次");
+        Thread.sleep(3000);
+        log.info("工作者线程执行5次");
+        Thread.sleep(3000);
+        log.info("工作者线程执行6次");
+        Thread.sleep(3000);
+        return "test";
     }
 }

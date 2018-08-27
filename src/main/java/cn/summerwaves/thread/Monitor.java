@@ -18,8 +18,8 @@ public class Monitor implements Runnable {
     @Override
     public void run() {
         while (true) {
-            log.info("工作者线程的状态为中断状态:{}", future.isCancelled());
             try {
+                log.info("工作者线程的状态为中断状态:{}", future.isCancelled());
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();

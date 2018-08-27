@@ -9,7 +9,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 public class TimeoutKiller implements Runnable {
     private static final Logger log = getLogger(TimeoutKiller.class);
-    private long timeout = 5 * 1000;
+    private long timeout = 5 * 60 * 1000;
     private Long threadStartTime;
     private Future future;
 
@@ -23,7 +23,7 @@ public class TimeoutKiller implements Runnable {
             threadStartTime = System.currentTimeMillis();
         }
         while (System.currentTimeMillis() < (threadStartTime + timeout)) {
-            log.info("{} 等待中，距离关闭工作者线程剩余 {} 秒",Thread.currentThread().getName(),((threadStartTime + timeout)-System.currentTimeMillis())/1000);
+            log.info("{} 等待中，距离关闭工作者线程剩余 {} 秒", Thread.currentThread().getName(), ((threadStartTime + timeout) - System.currentTimeMillis()) / 1000);
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -33,9 +33,6 @@ public class TimeoutKiller implements Runnable {
         KillIEProgress killIEProgress = new KillIEProgress();
         killIEProgress.killProcess();
 
-        if (future != null) {
-            future.cancel(false);
-        }
-
+        WorkThread.isContinue = false;
     }
 }
